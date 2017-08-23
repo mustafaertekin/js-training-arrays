@@ -12,7 +12,8 @@ describe('Array', function () {
     describe('#arithmetic', function () {
         it('should result the right number', function () {
             var c = [3, 4, 9, 12];
-            c[1].should.equal(4);
+            c[0]=c[0]+1;
+            c[0].should.equal(4);
         });
         it('should be equal to the second item', function () {
             var c = new Array(23, 46); // do not touch this
@@ -52,8 +53,8 @@ describe('Array', function () {
         });
         it('should create a string with manipulated content', function () {
             var c = ['i', 't', 'c', 'l', 'u', 'b']; // do not touch this
-            c.join("").replace("c", "C");
-            c.should.equal("itClub");
+            var processed = c.join("").replace("c", "C");
+            processed.should.equal("itClub");
         });
     });
         
@@ -113,7 +114,8 @@ describe('Array', function () {
     describe('#push()', function () {
         it('should insert item at the end of the array', function () {
             var c = [10]; // do not touch this!
-            c = c.push(11,12);
+            c.push(11,12);
+            var processed = c;
             processed.should.be.deepEqual([10,11,12]);
         });        
     });
@@ -121,7 +123,8 @@ describe('Array', function () {
     describe('#shift()', function () {
         it('should remove item at the front of the array', function () {
             var c = [10, 12, 13]; // do not touch this!
-            var processed = c.shift(); 
+            c.shift(); 
+            var processed = c;
             processed.should.be.deepEqual([12, 13]);
         });        
     });
@@ -129,11 +132,13 @@ describe('Array', function () {
     describe('#unshift()', function () {
         it('should insert item in the begin of the array', function () {
             var c = [12, 13]; // do not touch this!
-            var processed = c.unshift(10); 
+            c.unshift(10);
+            var processed =  c;
             processed.should.be.deepEqual([10, 12, 13]);
         });  
         it('should insert item as the first item in the array', function () {
             var c = [12, 13]; // do not touch this!
+            c.unshift(1,10,13);
             var processed = c; // manuîpulate only this line
             processed.should.be.deepEqual([1, 10, 13, 12, 13]);
         });          
@@ -142,12 +147,13 @@ describe('Array', function () {
     describe('#reverse()', function () {
         it('should change the order of items', function () {
             var c = [2, 101, 55]; // do not touch this!
+            c.reverse();
             var processed = c; 
             processed.should.be.deepEqual([55, 101, 2]);
         });        
         it('should reverse a string', function () {
             var c = "bulcti"; // do not touch this!
-            var processed = c; 
+            var processed = c.split("").reverse().join("");
             processed.should.be.deepEqual("itclub");
         });        
     });
@@ -162,7 +168,7 @@ describe('Array', function () {
             c.push(37);
             c.shift();
             c.unshift(5);
-            
+            c.unshift(2);
             (c[1] % c[0]).should.be.equal(1);
         });     
         it('should give number of people rest in the queue', function () {
@@ -173,7 +179,7 @@ describe('Array', function () {
             c.pop();
             c.reverse();
             c.shift();
-            
+            c.unshift('mehmet');
             c.should.be.deepEqual(['mehmet', 'ferdi']);
         });
     });
@@ -181,7 +187,7 @@ describe('Array', function () {
     describe('#looping', function () {
         it('should increment the counter one by one', function () {
               var counter = 0; // do not touch this
-              for(var index=0; index < 5; index = index + 1){
+              for(var index=0; index < 8; index = index + 1){
                   counter = counter + 1;
               }
             
@@ -191,16 +197,16 @@ describe('Array', function () {
               var c = new Array(1,2,3,4,6);
               var counter = 0; // do not touch this!
 
-              for(var index=0; index < 5; index = index + 1){
+              for(var index=1; index < 5; index = index + 1){
                   counter = counter + c[index];
               }            
               counter.should.be.equal(15);
         });
         it('should increment the counter randomly', function () {
               var c = []; // do not touch this!
-              var maxNumber = 7;   
+              var maxNumber = 6;   
             
-              for(var index=1; index < max; index = index + 1){
+              for(var index=0; index < maxNumber; index = index + 1){
                   c[index] = index * Math.random();
               }
               c.length.should.be.equal(6);
@@ -208,11 +214,10 @@ describe('Array', function () {
         });
         it('should change the array items indiviually', function () {
               var c = ["a", 'n', ' ', 'a', 't', "c", "l", 'u', 'b']; // do not touch this!
-        
-              for(var index=1; index < c.length; index = index + 1){
-                  c[index] = c[index];
+              for(var index=0; index < c.length; index = index + 1){
+                  if (c[index] == 'a') {c[index] = 'i';}
               }
-
+              c = c.join('');
               c.should.be.equal('in itclub');
         });
         it('should select only the even numbers', function () {
@@ -220,34 +225,44 @@ describe('Array', function () {
               var a = [];
 
               for(var index=0; index < c.length; index = index + 1){
-                  a.push(c[index]);
+                  if (c[index] % 2 == 0) {  
+                      a.push(c[index]);
+                  } 
               }
-
               a.should.be.deepEqual([2,4,6]);
         });
         it('should help to find the maximum number', function () {
               var c = [10,21,82,23,64,15,6]; // do not touch this!
-              var max = 34; // get maximum number
+              var max = 0; // get maximum number
               for(var index=0; index < c.length; index = index + 1){
-                  max = c[index];
+                  if (c[index] > max) {
+                      max = c[index];
+                  } 
               }
               max.should.be.equal(82);
         });
         it('should help to find the minimum number', function () {
               var c = [10,21,82,23,64,15,6]; // do not touch this!
-              var min = 34; // get minimum number
-              for(var index=0; index < c.length -1; index = index + 1){
-                 min = c[index];
+              var min = 100 ; // get minimum number
+              for(var index=0; index < c.length; index = index + 1){
+                  if (c[index] < min) {
+                      min = c[index];
+                  }
               }
               min.should.be.equal(6);
         });     
         it('should help to find the median', function () {
               var c = [13,21,82,23,64,15,6]; // do not touch this!
               var median = 34; // get median f.i [6,1,5] => 6+1+5/(number of element = 3) = 4,
-                               // you can use reduce function but you dont have to.
-              for(var index=0; index < c.length; index = index + 1){
-                 median = c[index];
-              }        
+                              
+//The reduce() method reduces the array to a single value.
+            
+             function getSum(total, num) {  //The return value of the function is stored in an accumulator (result/total).
+                return total + num;
+             }
+            
+              median = c.reduce(getSum) / c.length;
+            
               median.should.be.equal(32);
         }); 
         it('should help to find the numbers factor of three ', function () {
@@ -255,8 +270,12 @@ describe('Array', function () {
               var theNumbers = []; 
             
               for(var index=0; index < c.length; index = index + 1){
-                 theNumbers.push(c[index]);
-              }        
+                  if (c[index] % 3 == 0) {
+                      theNumbers.push(c[index]);
+                  }
+              }
+              theNumbers = theNumbers.sort(function(a, b){return a-b});
+            
               theNumbers.should.be.deepEqual([6,9,21,60]);
         });
         it('should help to find the numbers which can be divided by 2 or 3', function () {
@@ -264,8 +283,11 @@ describe('Array', function () {
               var theNumbers = []; 
             
               for(var index=0; index < c.length; index = index + 1){
-                 theNumbers = c[index];
-              }        
+                  if (c[index] % 2 == 0 || c[index] % 3 == 0) {
+                      theNumbers = c.push(c[index]);
+                  }
+              }   
+            console.log(theNumbers);
               theNumbers.should.be.deepEqual([4,6,9,21,60,80]);
         });
         it('should help to find the numbers which can be divided by both 2 and 3', function () {
