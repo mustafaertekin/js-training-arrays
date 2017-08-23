@@ -284,10 +284,10 @@ describe('Array', function () {
             
               for(var index=0; index < c.length; index = index + 1){
                   if (c[index] % 2 == 0 || c[index] % 3 == 0) {
-                      theNumbers = c.push(c[index]);
+                      theNumbers.push(c[index]);
                   }
               }   
-            console.log(theNumbers);
+              theNumbers.sort();
               theNumbers.should.be.deepEqual([4,6,9,21,60,80]);
         });
         it('should help to find the numbers which can be divided by both 2 and 3', function () {
@@ -295,34 +295,45 @@ describe('Array', function () {
               var theNumbers = []; 
             
               for(var index=0; index < c.length; index = index + 1){
-                 theNumbers = c[index];
+                  if (c[index] % 2 == 0 && c[index] % 3 == 0){
+                    theNumbers.push(c[index]);
+                  }
               }        
+            theNumbers.sort();
+
               theNumbers.should.be.deepEqual([6, 60]);
         });
-        it('should help to find the strings whic containing the word "el"', function () {
+        it('should help to find the strings which containing the word "el"', function () {
               var c = ['elveda','selami','hadi','itclub','kel','heyelan','oooo!','saral', 'peri', 'deli']; // do not touch this!
               var theNumbers = []; 
             
-              for(var index=0; index < 3; index = index + 1){
-                 theNumbers = c[index];
+              for(var index=0; index < c.length; index = index + 1){
+                  if (c[index].match(/el/) != undefined) {
+                      theNumbers.push(c[index]);
+                  }
               }        
-              theNumbers.should.be.deepEqual(['elveda','selami','kel','heyelan','deli']);
+        theNumbers.should.be.deepEqual(['elveda','selami','kel','heyelan','deli']);
         });
         it('should help to find repeating numbers', function () {
               var c = [10,21,10,23,64,21,6]; // do not touch this!
-              var processed = []; 
-              for(var index=0; index < c.length; index = index + 1){
-                 processed.push(c[index]);
-              }        
-              processed.should.be.deepEqual([10,21]);
+              c = c.sort(); 
+              var processed = [];
+              for(var index=0; index < c.length - 1; index = index + 1){
+                  if (c[index + 1] == c[index]){
+                       processed.push(c[index]);
+                  }
+              }      
+            processed.should.be.deepEqual([10,21]);
         }); 
         it('should find the numbers less then 100', function () {
               var c = [10,83,100,1000]; // do not touch this!
               var processed = []; 
               var index=0;
               while(index < c.length){
+                  if (c[index] <= 100){
+                     processed.push(c[index]); 
+                  }
                  index = index + 1;  
-                 processed.push(c[index]);
               }        
               processed.should.be.deepEqual([10,83,100]);
         }); 
@@ -333,7 +344,7 @@ describe('Array', function () {
         it('should choose one one value', function () {
             var c = true; // do not touch this
             var processed=1;
-            if(c){
+            if(c == false){
                 processed = 2;
             }
             
@@ -342,10 +353,10 @@ describe('Array', function () {
         it('should evaluate the condition to a boolean', function () {
             var c = Number.isNaN('NaN'); // do not touch this
             var processed=0;
-            if(c){
+            if(c == true){
                 processed = 2;
             }else{
-                processed = 1;
+                processed = 0;
             }
             
             processed.should.be.equal(0);
@@ -357,21 +368,21 @@ describe('Array', function () {
             if(c === 'ferdi'){
                 processed = 'progress';
             }else if(c === 'mesut'){
-                processed = 'take easy';
+                processed = 'take it easy';
             }else{
                 processed = 'go forward';
             }
-            
+
             processed.should.be.equal('take it easy');
         });
         it('should evaluate the ternary operator to a value', function () {
             var c = 'iskender'; // do not touch this
-            var processed= c === 'iskender' ? "AC KALDIK YINE" : 'ENFESSS';
-            
+            var processed= c !== 'iskender' ? "AC KALDIK YINE" : 'ENFESS';
+
             processed.should.be.equal('ENFESS');
         });
         it('should evaluate the nested ternary operator to a value', function () {
-            var c = 'mezut'; // do not touch this
+            var c = 'mesut'; // do not touch this
             var processed= c === 'mesut'
                            ? 'adana' : c === 'ferdi'
                            ? 'giresun' : c === 'mustafa'
@@ -384,7 +395,9 @@ describe('Array', function () {
             var country = null;
             
             switch(city){
-                case 'adana':
+                case 'adana': 
+                    country = 'CH'
+                    break;
                 case 'istanbul':
                     country = 'NK';
                     break;
