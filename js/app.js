@@ -286,8 +286,12 @@ describe('Array', function () {
                   if (c[index] % 2 == 0 || c[index] % 3 == 0) {
                       theNumbers.push(c[index]);
                   }
-              }   
-              theNumbers.sort();
+              }
+              function sortNumber(a,b) {
+                return a - b;
+                }
+            theNumbers.sort(sortNumber);
+            console.log(theNumbers);
               theNumbers.should.be.deepEqual([4,6,9,21,60,80]);
         });
         it('should help to find the numbers which can be divided by both 2 and 3', function () {
