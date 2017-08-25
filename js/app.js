@@ -35,7 +35,8 @@ describe('Array', function () {
         });
         it('should find the right array slot', function () {
             var c = new Array(5); // do not touch this
-            c.length.should.be.equal(5);
+            c[0]=5;
+            c[0].should.be.equal(5);
         });       
         it('should find and remove the item 2', function () {
             var c = [10, 22, 2, 34, 15, 3]; // do not touch this!
@@ -84,13 +85,14 @@ describe('Array', function () {
     describe('#sort()', function () {
         it('should sort the array in ascending order', function () {
             var c = [9, 2, 6, 0, -1]; // do not touch this
-            c.sort();
+            c.sort(function(a,b){return a>b});
+      
             c.should.be.deepEqual([-1, 0, 2, 6, 9]);
         });
         it('should sort the array in descending order', function () {
             var c = [-1, 1, 3, 2]; // do not touch this
-            c.sort();
-            c.reverse();
+            c.sort(function(a,b){return a<b});
+            
             c.should.be.deepEqual([3, 2, 1, -1]);
         });        
     });
@@ -320,13 +322,24 @@ describe('Array', function () {
         });
         it('should help to find repeating numbers', function () {
               var c = [10,21,10,23,64,21,6]; // do not touch this!
-              c = c.sort(); 
+             
               var processed = [];
-              for(var index=0; index < c.length - 1; index = index + 1){
+              /*for(var index=0; index < c.length - 1; index = index + 1){
                   if (c[index + 1] == c[index]){
                        processed.push(c[index]);
                   }
-              }      
+              }    */  
+            
+            // domch:
+        for(var outerIndex=0; outerIndex < c.length; outerIndex++){
+            for(var innerIndex=0; innerIndex < c.length; innerIndex++){
+					  if (outerIndex!=innerIndex && c[outerIndex] == c[innerIndex] && processed.indexOf(c[outerIndex])==-1) {
+						processed.push(c[outerIndex]);
+						continue;
+					  }  
+				  }           // m.ertekin: "Woww"
+        }
+            
             processed.should.be.deepEqual([10,21]);
         }); 
         it('should find the numbers less then 100', function () {
